@@ -39,4 +39,10 @@ Plan approved → orchestrator activates
 - [ ] `set.seed()` once at top if stochastic
 - [ ] Output files created at expected paths
 - [ ] Tolerance checks pass (if applicable)
-- [ ] Quality score >= 80
+- [ ] Quality score >= 85
+
+## Cross-references
+
+- `.claude/rules/project-lifecycle.md` — project naming (`NN_<slug>`), the 8 status states, scaffold workflow via `/new-project`
+- `.claude/rules/corelogic-data-protocol.md` — single-loader-entry-point contract for CoreLogic data
+- `.claude/rules/multi-language-conventions.md` — R / Python / Julia role allocation and parquet exchange
