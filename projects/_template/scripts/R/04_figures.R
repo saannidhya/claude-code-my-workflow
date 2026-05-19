@@ -1,0 +1,28 @@
+#' 04: Generate manuscript figures.
+
+source(here::here("{{PROJECT_PATH}}/scripts/R/00_setup.R"))
+
+panel <- readRDS(fs::path(out_dir, "sample_panel.rds"))
+
+# Example: sale price over time
+p_prices <- panel |>
+  mutate(year = as.integer(format(as.Date(SALE_DATE), "%Y"))) |>
+  group_by(year) |>
+  summarize(median_price = median(SALE_AMOUNT, na.rm = TRUE), .groups = "drop") |>
+  ggplot(aes(year, median_price)) +
+  geom_line(linewidth = 0.8) +
+  geom_point() +
+  labs(
+    title    = "Median sale price by year",
+    subtitle = "{{PROJECT_NAME}} — preliminary",
+    x        = "Year",
+    y        = "Median sale price (USD)",
+    caption  = "Source: CoreLogic. Sample placeholder."
+  )
+
+ggsave(
+  fs::path(figures_dir, "F1_median_price_trend.pdf"),
+  p_prices, width = 6, height = 4, device = cairo_pdf
+)
+
+cat("Figures written to: ", figures_dir, "\n", sep = "")
