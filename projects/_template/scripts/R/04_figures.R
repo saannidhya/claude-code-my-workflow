@@ -6,7 +6,7 @@ panel <- readRDS(fs::path(out_dir, "sample_panel.rds"))
 
 # Example: sale price over time (snake_case CoreLogic schema)
 p_prices <- panel |>
-  mutate(year = as.integer(format(as.Date(sale_derived_date), "%Y"))) |>
+  # year was already derived in 01_clean.R; this assumes panel has it
   group_by(year) |>
   summarize(median_price = median(sale_amount, na.rm = TRUE), .groups = "drop") |>
   ggplot(aes(year, median_price)) +
