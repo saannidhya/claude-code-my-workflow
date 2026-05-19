@@ -64,7 +64,7 @@ corelogic_research/
 
 | # | Slug | Status | Topic | Manuscript | Slides |
 |---|------|--------|-------|------------|--------|
-| _none yet_ | | | _Run `/new-project <slug>` to start_ | | |
+| 01 | `property_tax_regressivity` | SCOPING | Are property-tax assessments more regressive in declining neighborhoods than in growing ones? National extension of Berry (2021 AEJ:Policy) / Avi-Yonah (2024) | [projects/01_property_tax_regressivity/manuscript/paper.tex](projects/01_property_tax_regressivity/manuscript/paper.tex) | [projects/01_property_tax_regressivity/slides/seminar.tex](projects/01_property_tax_regressivity/slides/seminar.tex) |
 
 ---
 

@@ -1,0 +1,50 @@
+---
+title: "Property Tax Assessment Regressivity"
+subtitle: "Seminar — preliminary results"
+author: "Saani Rawat (Marquette University)"
+date: today
+format:
+  revealjs:
+    theme: ../../../Quarto/theme-template.scss
+    slide-number: true
+    chalkboard: false
+    incremental: false
+    smaller: false
+    transition: none
+---
+
+# Motivation
+
+- {{MOTIVATION_BULLET_1}}
+- {{MOTIVATION_BULLET_2}}
+
+# Data
+
+CoreLogic University-of-Cincinnati extract:
+
+- Owner Transfer (transactions)
+- Property Characteristics
+- Coverage: {{COVERAGE_PLACEHOLDER}}
+
+# Empirical Strategy
+
+$$
+y_{it} = \alpha + \beta D_{it} + \gamma X_{it} + \mu_i + \lambda_t + \varepsilon_{it}
+$$
+
+# Main results
+
+(Insert manuscript table T2 here)
+
+# Trend in prices
+
+![](../manuscript/figures/F1_median_price_trend.pdf)
+
+# Takeaways
+
+1. {{TAKEAWAY_1}}
+2. {{TAKEAWAY_2}}
+
+# Thank you
+
+saani.rawat@marquette.edu
