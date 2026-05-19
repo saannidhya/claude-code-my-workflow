@@ -5,17 +5,17 @@ library(fixest)
 
 panel <- readRDS(fs::path(out_dir, "sample_panel.rds"))
 
-# Example: hedonic price regression
+# Example: hedonic price regression (snake_case CoreLogic schema post normalize_cols)
 mod_baseline <- feols(
-  log(SALE_AMOUNT) ~ BEDROOMS + BATHROOMS + LIVING_AREA | year,
+  log(sale_amount) ~ bedrooms + bathrooms + living_area | year,
   data    = panel,
-  cluster = "APN"
+  cluster = "clip"
 )
 
 mod_extended <- feols(
-  log(SALE_AMOUNT) ~ BEDROOMS + BATHROOMS + LIVING_AREA + i(year) | APN,
+  log(sale_amount) ~ bedrooms + bathrooms + living_area + i(year) | clip,
   data    = panel,
-  cluster = "APN"
+  cluster = "clip"
 )
 
 results <- list(

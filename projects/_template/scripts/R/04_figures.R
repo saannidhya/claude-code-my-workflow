@@ -4,11 +4,11 @@ source(here::here("{{PROJECT_PATH}}/scripts/R/00_setup.R"))
 
 panel <- readRDS(fs::path(out_dir, "sample_panel.rds"))
 
-# Example: sale price over time
+# Example: sale price over time (snake_case CoreLogic schema)
 p_prices <- panel |>
-  mutate(year = as.integer(format(as.Date(SALE_DATE), "%Y"))) |>
+  mutate(year = as.integer(format(as.Date(sale_derived_date), "%Y"))) |>
   group_by(year) |>
-  summarize(median_price = median(SALE_AMOUNT, na.rm = TRUE), .groups = "drop") |>
+  summarize(median_price = median(sale_amount, na.rm = TRUE), .groups = "drop") |>
   ggplot(aes(year, median_price)) +
   geom_line(linewidth = 0.8) +
   geom_point() +

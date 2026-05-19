@@ -11,9 +11,9 @@ msummary(
   output    = fs::path(tables_dir, "T2_main_results.tex"),
   stars     = TRUE,
   gof_omit  = "AIC|BIC|RMSE|Within|Pseudo",
-  coef_map  = c("BEDROOMS" = "Bedrooms",
-                "BATHROOMS" = "Bathrooms",
-                "LIVING_AREA" = "Living area (sqft)")
+  coef_map  = c("bedrooms" = "Bedrooms",
+                "bathrooms" = "Bathrooms",
+                "living_area" = "Living area (sqft)")
 )
 
 cat("Tables written to: ", tables_dir, "\n", sep = "")

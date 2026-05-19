@@ -59,11 +59,43 @@ log_msg <- function(msg) {
 }
 
 # ---------- conversion logic ----------
+
+#' Normalize CoreLogic column names to snake_case.
+#' E.g.,
+#'   "SALE AMOUNT" -> "sale_amount"
+#'   "APN (PARCEL NUMBER UNFORMATTED)" -> "apn_parcel_number_unformatted"
+#'   "SALE DERIVED DATE" -> "sale_derived_date"
+#' This makes the parquet store usable from R / Python / Julia without
+#' quoting and without per-call rename layers.
+normalize_cols <- function(df) {
+  newnames <- names(df) |>
+    tolower() |>
+    gsub("[()/-]", " ", x = _) |>
+    gsub("\\s+", "_", x = _) |>
+    gsub("_+$", "", x = _) |>
+    gsub("^_+", "", x = _)
+  # Deduplicate any clashes by appending _2, _3
+  dups <- duplicated(newnames)
+  if (any(dups)) {
+    n <- 2
+    while (any(duplicated(newnames))) {
+      idx <- which(duplicated(newnames))
+      newnames[idx] <- paste0(newnames[idx], "_", n)
+      n <- n + 1
+    }
+  }
+  names(df) <- newnames
+  df
+}
+
 detect_year_col <- function(df) {
-  candidates <- c("SALE_DATE", "RECORDING_DATE", "TRANSFER_DATE",
-                  "DOCUMENT_DATE", "DEED_DATE",
-                  # CoreLogic-specific variations (numeric YYYYMMDD)
-                  "SALE DATE", "RECORDING DATE", "TRANSFER DATE")
+  # After normalize_cols(), names are snake_case.
+  candidates <- c(
+    "sale_derived_date", "sale_date",
+    "recording_date", "sale_derived_recording_date",
+    "transfer_date", "transaction_batch_date",
+    "document_date", "deed_date"
+  )
   for (col in candidates) {
     if (col %in% names(df)) return(col)
   }
@@ -150,6 +182,9 @@ convert_state_csv <- function(csv_path, dataset) {
     log_msg(glue("  -> SKIP (empty)"))
     return(invisible(NULL))
   }
+
+  # Normalize column names to snake_case so downstream code is consistent.
+  df <- normalize_cols(df)
 
   if (dataset == "ot") {
     # Owner Transfer: partition by state and year
