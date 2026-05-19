@@ -168,3 +168,10 @@ Include the registry URL: OSF → `osf.io/registries`, AsPredicted → `aspredic
 **Different registries asking for different things** — use the registry's own template if this skill's mapping is too coarse. The three styles cover ~90% of social-science preregistrations; edge cases (PROSPERO, ClinicalTrials.gov, ISRCTN) need the registry's native form.
 
 **Output dir doesn't exist** — `quality_reports/preregistrations/.gitkeep` should exist on a fresh fork; if missing, the skill will create the directory before writing.
+
+
+## Project-awareness (2026-05-18)
+
+Accepts a project-scoped flag: `/preregister --project NN_<slug> --style osf`.
+
+If invoked from within `projects/NN_<slug>/`, auto-detects. The preregistration document is drafted from `projects/NN_<slug>/research_spec.md` and saved to `projects/NN_<slug>/quality_reports/preregistrations/`.

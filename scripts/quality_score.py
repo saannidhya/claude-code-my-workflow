@@ -3,7 +3,7 @@
 Quality Scoring System for Academic Course Materials
 
 Calculates objective quality scores (0-100) based on defined rubrics.
-Enforces quality gates: 80 (commit), 90 (PR), 95 (excellence).
+Enforces quality gates: 85 (commit), 92 (PR), 97 (excellence).
 
 Usage:
     python scripts/quality_score.py Quarto/Lecture6_Topic.qmd
@@ -80,9 +80,9 @@ BEAMER_RUBRIC = {
 }
 
 THRESHOLDS = {
-    'commit': 80,
-    'pr': 90,
-    'excellence': 95
+    'commit': 85,
+    'pr': 92,
+    'excellence': 97
 }
 
 # ==============================================================================
@@ -697,13 +697,13 @@ Examples:
   python scripts/quality_score.py Quarto/Lecture6.qmd --verbose
 
 Quality Thresholds:
-  80/100 = Commit threshold (blocks if below)
-  90/100 = PR threshold (warning if below)
-  95/100 = Excellence (aspirational)
+  85/100 = Commit threshold (blocks if below)
+  92/100 = PR threshold (warning if below)
+  97/100 = Excellence (aspirational)
 
 Exit Codes:
-  0 = Score >= 80 (commit allowed)
-  1 = Score < 80 (commit blocked)
+  0 = Score >= 85 (commit allowed)
+  1 = Score < 85 (commit blocked)
   2 = Auto-fail (compilation/syntax error)
         """
     )

@@ -122,3 +122,24 @@ See [`r-reviewer.md`](../agents/r-reviewer.md) Category 11 ("Numerical Disciplin
 [ ] Comments explain WHY not WHAT
 [ ] Numerical discipline: no float ==, CDF clamping with eps, pre-allocated vectors
 ```
+
+## Project-Aware Setup (2026-05-18)
+
+Every analysis script under `projects/NN_<slug>/scripts/R/` begins with exactly one line:
+
+```r
+source(here::here("projects/NN_<slug>/scripts/R/00_setup.R"))
+```
+
+`00_setup.R` is the **only** file in a project that touches paths. It:
+
+1. Sources `shared_utils/R/*.R` (loader, dictionary, filters, theme)
+2. Sets `project_dir`, `data_dir`, `out_dir`, `tables_dir`, `figures_dir`
+3. Loads project-wide packages (`library(tidyverse)`, etc.)
+4. Sets `theme_set(theme_paper())` for consistent ggplot output
+
+All other scripts use these pre-set variables. No `setwd()`. No `here()` calls outside `00_setup.R` except for `source()` of the setup file itself.
+
+**Why this discipline:** Scripts become portable across machines, across users, and across project renames. The single line at the top of every script is the contract.
+
+See `projects/_template/scripts/R/00_setup.R` for the canonical template.

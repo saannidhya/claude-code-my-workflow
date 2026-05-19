@@ -1,4 +1,5 @@
 {
     "allowDangerouslySkipPermissions": true,
-    "claudeCode.initialPermissionMode": "bypassPermissions"
+    "claudeCode.initialPermissionMode": "bypassPermissions",
+    "workbench.colorTheme": "Default Dark+"
 }

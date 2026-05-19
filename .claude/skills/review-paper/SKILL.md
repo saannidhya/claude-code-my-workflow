@@ -397,3 +397,12 @@ The shipped `journal-profiles.md` covers 5 econ journals (AER, QJE, JPE, ECMA, R
 
 For non-econ paper types in `methods-referee.md`, extend the paper-type list (e.g., biology: `observational / experimental / computational / review`).
 
+
+
+## Project-awareness (2026-05-18)
+
+Accepts a project-scoped path: `/review-paper projects/NN_<slug>/manuscript/paper.tex`.
+
+If invoked without an argument while cwd is inside `projects/NN_<slug>/`, defaults to `manuscript/paper.tex`.
+
+Output reports land in `projects/NN_<slug>/quality_reports/` rather than root.

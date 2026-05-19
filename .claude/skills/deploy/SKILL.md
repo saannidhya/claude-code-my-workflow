@@ -39,3 +39,18 @@ Render Quarto slides and sync all files to `docs/` for GitHub Pages deployment.
 - Copies HTML and `_files/` directories to `docs/slides/`
 - Copies Beamer PDFs from `Slides/` to `docs/slides/`
 - Syncs `Figures/` to `docs/Figures/` using rsync
+
+
+## Project-aware mode (2026-05-18)
+
+`/deploy` now accepts a project-scoped slide path:
+
+```
+/deploy projects/01_<slug>/slides/seminar
+```
+
+Behavior: renders `projects/NN_<slug>/slides/<name>.qmd` to HTML, then syncs to `docs/<NN_slug>_<name>/` for GitHub Pages.
+
+Legacy `LectureN` mode still works for backward compatibility with the upstream template (writes to `docs/LectureN/`).
+
+If invoked without an argument, detect from cwd: if inside `projects/NN_<slug>/`, default to that project's `slides/seminar.qmd`.

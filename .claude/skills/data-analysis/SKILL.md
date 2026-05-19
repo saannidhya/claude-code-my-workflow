@@ -164,3 +164,14 @@ For regressions, simulations, or bootstrap loops that take more than a couple of
 3. Continue or course-correct based on what the stream reveals.
 
 This avoids the polling-loop anti-pattern (`sleep 30; check; sleep 30; check`) and avoids burning cache on idle waits. Especially useful when paired with the [Cost-Conscious Parallelism](https://psantanna.com/claude-code-my-workflow/workflow-guide.html#cost-conscious-parallelism) section of the guide.
+
+
+## Project-awareness (2026-05-18)
+
+Pre-Flight now asks:
+- **Which project does this analysis belong to?** Options: existing `projects/NN_<slug>/`, new project (suggest `/new-project` first), or root-level exploration (use `explorations/`).
+- Default outputs land in `projects/NN_<slug>/scripts/R/_outputs/` (not root `scripts/R/_outputs/`).
+- Default scripts created under `projects/NN_<slug>/scripts/R/` and follow the `01_clean.R / 02_analyze.R / ...` numbering convention.
+- First line of every new script: `source(here::here("projects/NN_<slug>/scripts/R/00_setup.R"))`.
+
+Data loaded via `shared_utils/R/corelogic_loader.R`. Never read raw CoreLogic CSVs directly — see `.claude/rules/corelogic-data-protocol.md`.

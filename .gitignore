@@ -39,6 +39,7 @@ Thumbs.db
 # Claude Code local files (not shared across machines)
 .claude/settings.local.json
 .claude/state/
+.claude/scheduled_tasks.lock
 CLAUDE.local.md
 
 # IDE
@@ -76,6 +77,79 @@ quality_reports/preregistrations/*
 # R analysis outputs (generated artifacts; keep scripts, ignore outputs)
 scripts/R/_outputs/
 
+# Ignore data folder contents (allow .gitkeep + README/PROVENANCE markers, see negations below)
+/data/*
+/data/*/*
+
 # Output artifacts — uncomment lines below based on your preference
 # *.rds
 # output/**/*.rds
+
+# ==============================================================================
+# CoreLogic Research project additions (2026-05-18)
+# ==============================================================================
+
+# Data working store — data/ contents are gitignored above; these are explicit
+# per-subdirectory .gitkeep + doc allowances so the directory structure ships
+# in fresh clones. Order matters: we re-include subdirs, then re-include the
+# allowed files within them.
+!/data/.gitkeep
+!/data/README.md
+!/data/corelogic_extracts/
+!/data/corelogic_baseline/
+!/data/external/
+!/data/derived/
+!/data/corelogic_extracts/.gitkeep
+!/data/corelogic_baseline/.gitkeep
+!/data/corelogic_baseline/PROVENANCE.md
+!/data/external/.gitkeep
+!/data/derived/.gitkeep
+
+# Per-project intermediate outputs (gitignored; .gitkeep ships)
+projects/*/scripts/R/_outputs/
+projects/*/scripts/python/_outputs/
+projects/*/scripts/julia/_outputs/
+!projects/*/scripts/R/_outputs/.gitkeep
+!projects/*/scripts/python/_outputs/.gitkeep
+!projects/*/scripts/julia/_outputs/.gitkeep
+
+# Per-project LaTeX build artifacts
+projects/*/manuscript/*.aux
+projects/*/manuscript/*.bbl
+projects/*/manuscript/*.blg
+projects/*/manuscript/*.log
+projects/*/manuscript/*.out
+projects/*/manuscript/*.toc
+projects/*/manuscript/*.fls
+projects/*/manuscript/*.fdb_latexmk
+projects/*/manuscript/*.synctex.gz
+projects/*/slides/*.aux
+projects/*/slides/*.log
+projects/*/slides/*.nav
+projects/*/slides/*.out
+projects/*/slides/*.snm
+projects/*/slides/*.toc
+projects/*/slides/*.vrb
+
+# Parquet/Arrow files anywhere (always gitignored — too big, regenerable)
+*.parquet
+*.arrow
+*.feather
+
+# R environment management
+renv/library/
+renv/local/
+renv/staging/
+renv/python/
+renv/sandbox/
+!renv/activate.R
+!renv/settings.json
+
+# Python environment management
+.venv/
+.uv/
+__pycache__/
+*.egg-info/
+
+# Julia depot (local install caches)
+.julia/

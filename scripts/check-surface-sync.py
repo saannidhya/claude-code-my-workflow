@@ -125,12 +125,16 @@ def main() -> int:
     rel = lambda p: p.relative_to(REPO)
     drift: list[str] = []
 
-    # Sanity: every surface file listed must exist.
+    # Treat missing surface files as "not applicable for this fork" rather than
+    # a hard error. Forks that strip upstream-template docs (this CoreLogic
+    # research repo, for instance, dropped docs/ and guide/) shouldn't have to
+    # maintain dead surfaces. Still log so users notice if a file unexpectedly
+    # disappeared.
     missing = [p for p in SURFACES if not p.exists()]
     if missing:
         for p in missing:
-            print(f"ERROR: surface file missing: {rel(p)}", file=sys.stderr)
-        return 2
+            print(f"NOTE: surface file not present (skipped): {rel(p)}", file=sys.stderr)
+    surfaces = [p for p in SURFACES if p.exists()]
 
     print("Ground truth (counted from disk):")
     for k, v in GROUND_TRUTH.items():
@@ -138,7 +142,7 @@ def main() -> int:
     print()
 
     per_file: dict[Path, list[tuple[int, str, int, str]]] = {}
-    for path in SURFACES:
+    for path in surfaces:
         per_file[path] = scan_file(path)
 
     for path, hits in per_file.items():

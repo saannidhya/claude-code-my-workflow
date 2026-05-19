@@ -28,3 +28,12 @@ Run the comprehensive R code review protocol.
 
 4. **IMPORTANT: Do NOT edit any R source files.**
    Only produce reports. Fixes are applied after user review.
+
+
+## Project-awareness (2026-05-18)
+
+Accepts a project-scoped path: `/review-r projects/NN_<slug>/scripts/R/<script>.R`.
+
+If invoked without an argument while cwd is inside `projects/NN_<slug>/`, defaults to the most recently modified `scripts/R/*.R` in that project.
+
+Output reports land in `projects/NN_<slug>/quality_reports/` rather than root.

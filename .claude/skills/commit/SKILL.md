@@ -106,3 +106,15 @@ Report the PR URL and what was merged.
 - Exclude `settings.local.json` and sensitive files from staging.
 - Use `--merge` (not `--squash` or `--rebase`) unless asked otherwise.
 - If the commit message from `$ARGUMENTS` is provided, use it exactly.
+
+
+## Project-awareness (2026-05-18)
+
+When the staged changes touch files under `projects/NN_<slug>/`:
+
+1. Detect the project: `git diff --cached --name-only | grep -oE 'projects/[0-9]{2}_[a-z_]+' | sort -u`
+2. If exactly one project: prefix the commit message with `(NN_<slug>) ` and include the slug in the PR title
+3. If multiple projects: list them in the body — "Touches projects: 01_taxes, 02_climate"
+4. If no project (root infra change): use normal commit flow
+
+Quality threshold: 85 (raised from 80 on 2026-05-18). `/commit` halts below 85 unless user provides explicit override reason.

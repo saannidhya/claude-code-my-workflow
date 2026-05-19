@@ -124,3 +124,12 @@ Expected output (abridged):
 - [`.claude/agents/claim-verifier.md`](../../agents/claim-verifier.md) — the forked verifier.
 - [`.claude/rules/post-flight-verification.md`](../../rules/post-flight-verification.md) — the protocol.
 - MEMORY.md `[LEARN:pattern]` on Chain-of-Verification vs critic-fixer vs cross-artifact review.
+
+
+## Project-awareness (2026-05-18)
+
+Accepts a project-scoped path: `/verify-claims projects/NN_<slug>/manuscript/paper.tex`.
+
+If invoked without an argument while cwd is inside `projects/NN_<slug>/`, defaults to `manuscript/paper.tex`.
+
+Verifier-agent output reports land in `projects/NN_<slug>/quality_reports/` rather than root.

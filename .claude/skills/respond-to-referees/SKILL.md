@@ -142,3 +142,12 @@ Before reporting completion:
 2. Confirm every "Addressed" or "Partially addressed" classification cites a specific page/section/line.
 3. Confirm the warning summary was emitted (even if empty).
 4. Confirm the cover paragraph names the journal and manuscript ID correctly.
+
+
+## Project-awareness (2026-05-18)
+
+Accepts a project-scoped path pair: `/respond-to-referees <report-path> projects/NN_<slug>/manuscript/paper.tex`.
+
+If invoked from within `projects/NN_<slug>/` and the report lives in `projects/NN_<slug>/quality_reports/referee_<date>.md`, auto-detect both.
+
+Response document lands in `projects/NN_<slug>/quality_reports/` rather than root.
