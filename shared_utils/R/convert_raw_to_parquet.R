@@ -103,16 +103,35 @@ detect_year_col <- function(df) {
 }
 
 extract_year <- function(date_vec) {
-  # Try ISO parse first
-  parsed <- suppressWarnings(as.Date(date_vec))
-  if (any(!is.na(parsed))) return(as.integer(format(parsed, "%Y")))
-
-  # Fall back to YYYYMMDD numeric
-  if (is.numeric(date_vec) || all(grepl("^[0-9]{8}$", na.omit(as.character(date_vec))))) {
-    return(as.integer(substr(as.character(date_vec), 1, 4)))
+  # Case 1: numeric YYYYMMDD (CoreLogic's default for date columns)
+  # e.g., 20230415 -> 2023. Defensive width=8 zero-pad in case some values
+  # are 7-digit (year 200-something edge cases) — they get padded to be
+  # parseable, then rejected at the sanity check below.
+  if (is.numeric(date_vec) || is.integer(date_vec)) {
+    str <- formatC(as.numeric(date_vec), format = "d", flag = "0", width = 8)
+    yr  <- suppressWarnings(as.integer(substr(str, 1, 4)))
+    # Reject implausible years (CoreLogic data spans roughly 1900-present;
+    # any value outside [1700, current_year + 5] is a sentinel or bad parse)
+    bad <- !is.na(yr) & (yr < 1700 | yr > as.integer(format(Sys.Date(), "%Y")) + 5)
+    yr[bad] <- NA_integer_
+    return(yr)
   }
 
-  NA_integer_
+  # Case 2: Date / POSIXct object
+  if (inherits(date_vec, c("Date", "POSIXct", "POSIXt"))) {
+    return(as.integer(format(date_vec, "%Y")))
+  }
+
+  # Case 3: character — try ISO parse, then YYYYMMDD-as-string
+  if (is.character(date_vec)) {
+    parsed <- suppressWarnings(as.Date(date_vec))
+    if (any(!is.na(parsed))) return(as.integer(format(parsed, "%Y")))
+    if (all(grepl("^[0-9]{8}$", na.omit(date_vec)))) {
+      return(as.integer(substr(date_vec, 1, 4)))
+    }
+  }
+
+  rep(NA_integer_, length(date_vec))
 }
 
 #' Map a few known long-form state names to their 2-char codes.
