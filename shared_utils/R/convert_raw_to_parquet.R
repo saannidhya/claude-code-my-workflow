@@ -83,12 +83,36 @@ extract_year <- function(date_vec) {
   NA_integer_
 }
 
+#' Map a few known long-form state names to their 2-char codes.
+#' CoreLogic's by-state splitter sometimes emits long names instead of codes.
+LONG_NAME_TO_CODE <- c(
+  "MASSACHUSETTS" = "MA",
+  "CONNECTICUT"   = "CT",
+  "NEWHAMPSHIRE"  = "NH",
+  "NEWJERSEY"     = "NJ",
+  "NEWMEXICO"     = "NM",
+  "NEWYORK"       = "NY",
+  "NORTHCAROLINA" = "NC",
+  "NORTHDAKOTA"   = "ND",
+  "RHODEISLAND"   = "RI",
+  "SOUTHCAROLINA" = "SC",
+  "SOUTHDAKOTA"   = "SD",
+  "WESTVIRGINIA"  = "WV"
+)
+
 convert_state_csv <- function(csv_path, dataset) {
   fname <- path_file(csv_path)
-  state_code <- str_match(fname, "_([A-Za-z0-9.]+)\\.csv$")[, 2] |> toupper()
+  raw_token <- str_match(fname, "_([A-Za-z0-9.]+)\\.csv$")[, 2] |> toupper()
+
+  # Map long-form state names to 2-char code if applicable
+  state_code <- if (!is.na(raw_token) && raw_token %in% names(LONG_NAME_TO_CODE)) {
+    LONG_NAME_TO_CODE[[raw_token]]
+  } else {
+    raw_token
+  }
 
   if (is.na(state_code) || !is_valid_state_code(state_code)) {
-    log_msg(glue("QUARANTINE [{dataset}] {fname} - state code '{state_code}' not valid"))
+    log_msg(glue("QUARANTINE [{dataset}] {fname} - state token '{raw_token}' not valid"))
     if (!DRY_RUN) {
       file_copy(csv_path, path(QUARANTINE, fname), overwrite = TRUE)
     }
@@ -97,6 +121,12 @@ convert_state_csv <- function(csv_path, dataset) {
 
   if (!is.null(ONLY_STATES) && !(state_code %in% ONLY_STATES)) {
     log_msg(glue("SKIP [{dataset}] {fname} - not in --only list"))
+    return(invisible(NULL))
+  }
+
+  if (DRY_RUN) {
+    sz_mb <- round(file_info(csv_path)$size / 1024^2, 1)
+    log_msg(glue("KEEP [{dataset}] {fname} ({state_code}) [{sz_mb} MB] - dry-run"))
     return(invisible(NULL))
   }
 
@@ -118,11 +148,6 @@ convert_state_csv <- function(csv_path, dataset) {
 
   if (n == 0) {
     log_msg(glue("  -> SKIP (empty)"))
-    return(invisible(NULL))
-  }
-
-  if (DRY_RUN) {
-    log_msg(glue("  -> DRY-RUN: skip write"))
     return(invisible(NULL))
   }
 
