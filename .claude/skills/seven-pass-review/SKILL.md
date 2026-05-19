@@ -152,3 +152,12 @@ For cheaper alternatives:
 - Re-run seven lenses if the manuscript hasn't changed — check git diff against last run date in `_SYNTHESIS.md`, skip unchanged lenses if requested via `--incremental` (future).
 - Auto-apply fixes — that's `/review-paper --adversarial`'s job.
 - Replace human judgment. A reviewer who knows your subfield still beats seven LLMs.
+
+
+## Project-awareness (2026-05-18)
+
+Accepts a project-scoped path: `/seven-pass-review projects/NN_<slug>/manuscript/paper.tex`.
+
+If invoked without an argument while cwd is inside `projects/NN_<slug>/`, defaults to `manuscript/paper.tex`.
+
+All seven pass reports land in `projects/NN_<slug>/quality_reports/` rather than root.

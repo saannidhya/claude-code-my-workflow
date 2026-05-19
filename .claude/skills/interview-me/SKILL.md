@@ -136,3 +136,10 @@ Skip the ADR if the interview produced a single uncontested direction — ADRs a
 - **Probe weak spots gently.** If the identification strategy sounds fragile, ask "What would a skeptic say about...?" rather than "This won't work because..."
 - **Build on answers.** Each question should follow from the previous response.
 - **Know when to stop.** If the researcher has a clear vision after 4-5 exchanges, move to the specification. Don't over-interview.
+
+
+## Project-awareness (2026-05-18)
+
+Accepts a project-scoped flag: `/interview-me <topic> --project NN_<slug>`.
+
+If invoked from within `projects/NN_<slug>/`, auto-detects. The interactive interview produces the project's `research_spec.md` (the canonical placement — not a root-level file).

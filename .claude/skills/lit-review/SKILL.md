@@ -120,3 +120,12 @@ Append a Post-Flight block to the report (collapsed by default). See rule doc fo
 - **Prioritize recent work** (last 5-10 years) unless seminal papers are older.
 - **Note working papers vs published papers** — working papers may change.
 - **Do NOT fabricate citations.** If you're unsure about a paper's details, flag it for the user to verify. Post-Flight Verification catches most fabrications automatically; this rule is the backup.
+
+
+## Project-awareness (2026-05-18)
+
+Accepts a project-scoped flag: `/lit-review <topic> --project NN_<slug>`.
+
+Behavior: literature search runs as normal; new BibTeX entries land in the root `Bibliography_base.bib` (master); the synthesis report lands in `projects/NN_<slug>/quality_reports/` rather than root.
+
+If invoked without `--project` while cwd is inside `projects/NN_<slug>/`, auto-detects.

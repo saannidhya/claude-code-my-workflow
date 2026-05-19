@@ -56,3 +56,8 @@ Max 5 fix rounds. After that, escalate to user with remaining issues.
 ## Final Report
 
 Save to `quality_reports/[Lecture]_qa_final.md` with hard gate status, iteration summary, and remaining issues.
+
+
+## Project-aware paths (2026-05-18)
+
+`/qa-quarto projects/NN_<slug>/slides/seminar` — pass the slide stem (no extension); the skill finds `seminar.tex` and `seminar.qmd` in that directory.

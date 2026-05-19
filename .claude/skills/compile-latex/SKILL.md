@@ -54,3 +54,10 @@ TEXINPUTS=../Preambles:$TEXINPUTS BIBINPUTS=..:$BIBINPUTS latexmk -xelatex -inte
 - **Always use XeLaTeX**, never pdflatex
 - **TEXINPUTS** is required: your Beamer theme lives in `Preambles/`
 - **BIBINPUTS** is required: your `.bib` file lives in the repo root
+
+
+## Project-aware paths (2026-05-18)
+
+`/compile-latex projects/NN_<slug>/manuscript/paper.tex` works directly. The 3-pass XeLaTeX + bibtex sequence uses the same `TEXINPUTS=../../../Preambles` (three levels up) and `BIBINPUTS=../../..` from a project manuscript directory.
+
+For slides: `/compile-latex projects/NN_<slug>/slides/seminar.tex` — same path math.

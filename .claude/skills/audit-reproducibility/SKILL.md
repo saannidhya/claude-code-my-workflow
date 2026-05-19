@@ -168,3 +168,15 @@ Write `quality_reports/reproducibility_audit_[manuscript-name].md`:
 ## Long batch reruns: use the Monitor tool (Apr 2026)
 
 When `/audit-reproducibility` is asked to verify *all* numeric claims in a paper, the safest approach is to re-run the full pipeline (`00_run_all.R` or equivalent) and compare the regenerated outputs to the manuscript values. For pipelines that take more than a couple of minutes, background-launch the rerun and use Anthropic's **Monitor tool** (Apr 2026 Week 15) to stream stdout. The audit can react to errors mid-stream rather than waiting for the entire pipeline to finish before noticing a failed step.
+
+
+## Project-aware mode (2026-05-18)
+
+When auditing a paper under `projects/NN_<slug>/manuscript/paper.tex`:
+
+1. Detect project from the manuscript path
+2. Walk `projects/NN_<slug>/scripts/R/_outputs/` for `.rds` / `.parquet` outputs
+3. Walk `projects/NN_<slug>/manuscript/{tables,figures}/` for cited artifacts
+4. Cross-reference numeric claims in the manuscript against script outputs as usual
+
+Root-level `scripts/R/_outputs/` is only checked if the manuscript path doesn't match `projects/NN_<slug>/...`.

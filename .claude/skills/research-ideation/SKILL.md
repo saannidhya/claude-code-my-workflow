@@ -134,3 +134,10 @@ Before returning the ideation report, run the Post-Flight Verification protocol 
 - **Think like a referee.** For each causal question, immediately identify the identification challenge.
 - **Consider data availability.** A brilliant question with no available data is not actionable.
 - **Suggest specific datasets** where possible (FRED, Census, PSID, administrative data, etc.).
+
+
+## Project-awareness (2026-05-18)
+
+Accepts a project-scoped flag: `/research-ideation <topic> --project NN_<slug>`.
+
+If invoked from within `projects/NN_<slug>/`, auto-detects. Idea brainstorming output lands in `projects/NN_<slug>/quality_reports/decisions/` or appended to `research_spec.md` (user's choice).
