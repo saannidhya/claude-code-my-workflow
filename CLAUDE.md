@@ -64,7 +64,7 @@ corelogic_research/
 
 | # | Slug | Status | Topic | Manuscript | Slides |
 |---|------|--------|-------|------------|--------|
-| 01 | `property_tax_regressivity` | SCOPING | Are property-tax assessments more regressive in declining neighborhoods than in growing ones? National extension of Berry (2021 AEJ:Policy) / Avi-Yonah (2024) | [projects/01_property_tax_regressivity/manuscript/paper.tex](projects/01_property_tax_regressivity/manuscript/paper.tex) | [projects/01_property_tax_regressivity/slides/seminar.tex](projects/01_property_tax_regressivity/slides/seminar.tex) |
+| 01 | `property_tax_regressivity` | EXPLORATION | How much tax revenue is misallocated by assessor information asymmetry, and which mechanism (info decay / acquisition cost / institutions / appeals / transaction freq) drives it? Berry (2021 SSRN) replication + structural extension | [projects/01_property_tax_regressivity/manuscript/paper.tex](projects/01_property_tax_regressivity/manuscript/paper.tex) | [projects/01_property_tax_regressivity/slides/seminar.tex](projects/01_property_tax_regressivity/slides/seminar.tex) |
 
 ---
 

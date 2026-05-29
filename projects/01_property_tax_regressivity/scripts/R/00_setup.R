@@ -31,7 +31,18 @@ data_dir     <- here("data", "derived", "01_property_tax_regressivity")
 dir_create(data_dir)
 dir_create(out_dir)
 
-# ---- project-specific packages (add as needed) ----
-# library(fixest)
-# library(modelsummary)
-# library(did)
+# ---- project-specific packages ----
+suppressPackageStartupMessages({
+  library(fixest)        # within-jurisdiction fixed effects regression (Berry replication)
+  library(modelsummary)  # publication-ready tables
+  library(duckdb)        # query parquet store with SQL pushdown
+  library(glue)          # string interpolation in logs
+})
+
+# ---- project-specific data sub-paths ----
+panel_path <- path(data_dir, "national_panel_2007_2010.parquet")  # phase 1 cleaned panel
+report_dir <- path(project_dir, "quality_reports", "specs")
+dir_create(report_dir)
+
+# ---- helpers ----
+log_msg <- function(...) cat(format(Sys.time(), "[%H:%M:%S] "), ..., "\n", sep = "")
