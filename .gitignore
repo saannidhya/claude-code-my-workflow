@@ -131,6 +131,12 @@ projects/*/slides/*.snm
 projects/*/slides/*.toc
 projects/*/slides/*.vrb
 
+# Per-project reference PDFs (copyrighted academic work — don't redistribute)
+projects/*/docs/*.pdf
+projects/*/docs/*.PDF
+!projects/*/docs/README.md
+!projects/*/docs/.gitkeep
+
 # Parquet/Arrow files anywhere (always gitignored — too big, regenerable)
 *.parquet
 *.arrow
