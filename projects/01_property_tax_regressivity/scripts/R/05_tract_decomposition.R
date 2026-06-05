@@ -127,6 +127,16 @@ log_msg("Analytic rows (valid tract, non-singleton): ", format(nrow(d), big.mark
 log_msg("Distinct counties: ", format(dplyr::n_distinct(d$county_fips), big.mark = ","),
         " | distinct tracts: ", format(dplyr::n_distinct(d$census_tract), big.mark = ","))
 
+# Cache the analytic frame so robustness/extension scripts (07, ACS) need not
+# redo the state-by-state census_id merge.
+write_parquet(
+  d |> select(clip_chr, county_fips, census_tract, sale_amount,
+              assessment_ratio, log_sale_price, log_assessment_ratio),
+  path(data_dir, "rq1_analytic_frame.parquet")
+)
+log_msg("Cached analytic frame: rq1_analytic_frame.parquet (",
+        format(nrow(d), big.mark = ","), " rows)")
+
 # ===================================================================
 # CORE DECOMPOSITION
 # ===================================================================
