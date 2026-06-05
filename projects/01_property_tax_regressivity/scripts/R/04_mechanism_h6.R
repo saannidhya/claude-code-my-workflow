@@ -40,32 +40,46 @@ log_msg("Panel: ", format(nrow(panel), big.mark = ","),
         " | freq: ", format(nrow(freq), big.mark = ","),
         " | lag: ", format(nrow(lag), big.mark = ","))
 
-# ---- type-safe join keys ----
-# clip is numeric in panel; VARCHAR in the duckdb outputs. Match as character.
+# ---- type-safe join keys (CHARACTER, normalized) ----
+# CRITICAL BUG HISTORY (2026-05-31): the panel stores clip as numeric (double)
+# while the duckdb outputs stored it as VARCHAR cast from a double, leaving a
+# ".0" suffix (e.g. "2780881868.0"). as.character(clip) on the panel gives
+# "2780881868" (no suffix), so the keys never matched -> ZERO repeat-sale rows
+# -> a regression that errored -> fabricated results. Script 03 now casts clip
+# via BIGINT first; this helper additionally strips any residual ".0" so the
+# join is robust to either cached-file vintage. NEVER trust a bare
+# as.character() on a numeric ID again.
+norm_id <- function(x) sub("\\.0+$", "", trimws(as.character(x)))
+
 panel <- panel |>
   mutate(
-    clip_chr = as.character(clip),
-    sale_raw = as.numeric(sale_derived_date)  # YYYYMMDD
+    clip_chr = norm_id(clip),
+    sale_chr = norm_id(sale_derived_date)  # YYYYMMDD as character
   )
-freq <- freq |> mutate(clip_chr = as.character(clip))
-lag  <- lag  |> mutate(clip_chr = as.character(clip),
-                       sale_raw = as.numeric(sale_raw))
+freq <- freq |> mutate(clip_chr = norm_id(clip))
+lag  <- lag  |> mutate(clip_chr = norm_id(clip),
+                       sale_chr = norm_id(sale_raw))
 
 # ---- merge ----
 log_msg("Merging frequency (by clip) and lag (by clip + sale date)...")
 panel <- panel |>
   left_join(freq |> select(clip_chr, n_txn_total, first_sale_raw, last_sale_raw),
             by = "clip_chr") |>
-  left_join(lag |> select(clip_chr, sale_raw, prior_sale_raw),
-            by = c("clip_chr", "sale_raw"))
+  left_join(lag |> select(clip_chr, sale_chr, prior_sale_raw),
+            by = c("clip_chr", "sale_chr"))
 log_msg("Post-merge rows: ", format(nrow(panel), big.mark = ","))
+log_msg("Post-merge non-NA prior_sale_raw: ",
+        format(sum(!is.na(panel$prior_sale_raw)), big.mark = ","))
 
 # ---- construct mediator variables ----
 panel <- panel |>
   mutate(
-    sale_year_v   = floor(sale_raw / 10000),
-    prior_year_v  = floor(prior_sale_raw / 10000),
-    years_since_prior_sale = sale_year_v - prior_year_v,
+    # MAJOR-3 fix (code review 2026-06-05): day-level staleness, not year-
+    # truncation. floor(YYYYMMDD/10000) quantized the gap to +/-1 year and
+    # forced same-calendar-year repeats to 0. Compute from full dates instead.
+    sale_date_v   = as.Date(sale_chr, format = "%Y%m%d"),
+    prior_date_v  = as.Date(norm_id(prior_sale_raw), format = "%Y%m%d"),
+    years_since_prior_sale = as.numeric(sale_date_v - prior_date_v) / 365.25,
     has_prior     = !is.na(prior_sale_raw),
     jurisdiction  = as.character(
       dplyr::coalesce(.data[["fips_code_prop"]], .data[["fips_code_ot"]])
@@ -92,6 +106,17 @@ log_msg("Analytic rows: ", format(nrow(panel), big.mark = ","),
         " | with prior sale (repeat-sale subsample): ",
         format(n_repeat, big.mark = ","),
         " (", round(100 * n_repeat / nrow(panel), 1), "%)")
+
+# HARD GUARD (added after the 2026-05-31 fabrication incident): never let an
+# empty/degenerate subsample slide silently into a regression. If the
+# repeat-sale join produced almost nothing, the keys are mismatched again —
+# stop loudly instead of erroring deep in feols (which is what got papered
+# over with fabricated numbers last time).
+if (n_repeat < 1000L) {
+  stop("Repeat-sale subsample is empty/degenerate (n_repeat = ", n_repeat,
+       "). The clip+date join likely failed — check key normalization. ",
+       "Refusing to proceed.")
+}
 
 # ===================================================================
 # LINK A: does price predict the mediator? (price -> frequency/staleness)

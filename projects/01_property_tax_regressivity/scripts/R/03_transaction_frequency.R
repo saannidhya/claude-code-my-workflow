@@ -47,7 +47,7 @@ lag_out  <- gsub("\\\\", "/", path(data_dir, "focal_txn_lag.parquet"))
 log_msg("Computing per-clip transaction frequency (full OT history)...")
 freq_sql <- sprintf("
   COPY (
-    SELECT CAST(clip AS VARCHAR) AS clip,
+    SELECT CAST(TRY_CAST(clip AS BIGINT) AS VARCHAR) AS clip,
            COUNT(*)                                   AS n_txn_total,
            MIN(TRY_CAST(sale_derived_date AS BIGINT)) AS first_sale_raw,
            MAX(TRY_CAST(sale_derived_date AS BIGINT)) AS last_sale_raw
@@ -67,7 +67,7 @@ log_msg("Computing focal-transaction lag (LAG over full history, output 2007-201
 lag_sql <- sprintf("
   COPY (
     WITH ranked AS (
-      SELECT CAST(clip AS VARCHAR)                    AS clip,
+      SELECT CAST(TRY_CAST(clip AS BIGINT) AS VARCHAR) AS clip,
              TRY_CAST(sale_derived_date AS BIGINT)    AS sale_raw,
              LAG(TRY_CAST(sale_derived_date AS BIGINT)) OVER (
                PARTITION BY clip
