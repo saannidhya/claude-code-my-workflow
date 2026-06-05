@@ -33,14 +33,15 @@ bse <- function(m) c(b = unname(coef(m)["log_sale_price"]),
 # ============================================================
 log_msg("Table 1: main decomposition")
 t1 <- list(
-  "(1) Pooled"               = berry$m3_pooled,
-  "(2) County FE (full)"     = berry$m2_assessment_ratio,
-  "(3) County FE (tract s.)" = rq1$m_county,
-  "(4) Tract FE"             = rq1$m_tract
+  "(1) Pooled" = berry$m3_pooled,
+  "(2) County" = berry$m2_assessment_ratio,
+  "(3) County" = rq1$m_county,
+  "(4) Tract"  = rq1$m_tract
 )
 t1_rows <- tibble::tribble(
-  ~term,            ~`(1) Pooled`, ~`(2) County FE (full)`, ~`(3) County FE (tract s.)`, ~`(4) Tract FE`,
-  "Fixed effects",  "None",        "County",                 "County",                     "Tract"
+  ~term,            ~`(1) Pooled`, ~`(2) County`, ~`(3) County`, ~`(4) Tract`,
+  "Fixed effects",  "None",        "County",      "County",      "Tract",
+  "Sample",         "Full",        "Full",        "Tract-cov.",  "Tract-cov."
 )
 attr(t1_rows, "position") <- 3
 
@@ -53,7 +54,7 @@ modelsummary(
   add_rows = t1_rows,
   stars    = c("*" = .05, "**" = .01, "***" = .001),
   title    = "Within-jurisdiction regressivity and its spatial decomposition",
-  notes    = "DV: log(assessment ratio). SE clustered by county in FE columns. Cols (3)-(4) use the identical tract-covered subsample: adding tract FE moves the slope from -0.41 to -0.52, so regressivity intensifies within neighborhoods."
+  notes    = "DV: log(assessment ratio); SE clustered by county."
 )
 
 # ============================================================
@@ -61,14 +62,14 @@ modelsummary(
 # ============================================================
 log_msg("Table 2: H6 mediation null")
 t2 <- list(
-  "(1) Base"        = h6$primary_base,
-  "(2) + Staleness" = h6$primary_mediated,
-  "(3) Base"        = h6$secondary_base,
-  "(4) + Turnover"  = h6$secondary_mediated
+  "(1) Base"   = h6$primary_base,
+  "(2) +Stale" = h6$primary_mediated,
+  "(3) Base"   = h6$secondary_base,
+  "(4) +Turn"  = h6$secondary_mediated
 )
 share_row <- tibble::tribble(
-  ~term,                    ~`(1) Base`, ~`(2) + Staleness`, ~`(3) Base`, ~`(4) + Turnover`,
-  "Share mediated (pct.)",  "",          "0.0",               "",          "0.5"
+  ~term,                    ~`(1) Base`, ~`(2) +Stale`, ~`(3) Base`, ~`(4) +Turn`,
+  "Share mediated (pct.)",  "",          "0.0",          "",          "0.5"
 )
 attr(share_row, "position") <- 7
 
@@ -83,7 +84,7 @@ modelsummary(
   add_rows = share_row,
   stars    = c("*" = .05, "**" = .01, "***" = .001),
   title    = "H6: transaction frequency does not mediate regressivity (Gelbach decomposition)",
-  notes    = "DV: log(assessment ratio), county FE, SE clustered by county. Cols (1)-(2): staleness mediator on the repeat-sale subsample. Cols (3)-(4): turnover mediator (descriptive; forward-looking). The base price slope is unchanged by either mediator."
+  notes    = "DV: log(assessment ratio), county FE; SE clustered by county."
 )
 
 # ---- inject \label into each table caption (so the paper can \ref them) ----

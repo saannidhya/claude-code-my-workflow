@@ -39,9 +39,28 @@ Two caveats bound the analysis. First, our assessment snapshot is of 2008--2009 
 
 \section{Data}\label{sec:data}
 
-Property records and transaction histories come from CoreLogic's bulk academic extract obtained through the University of Cincinnati. The full extract covers \dots\ See \cite{corelogic_data} for the underlying methodology.
+Our analysis draws on CoreLogic's bulk academic data, licensed through the University of Cincinnati \citep{corelogic_data}. We use two record systems: the \emph{Owner Transfer} file, which records deed transactions (sale price, transfer date, deed and transaction type), and the \emph{Property Characteristics} file, which records each parcel's assessor data (assessed value, tax amount, assessment year, structural attributes, and geocoding). The two are linked at the parcel level by CoreLogic's persistent property identifier (CLIP).
+
+\paragraph{Sample construction.} We restrict attention to arms-length residential sales. Following standard sales-ratio practice \citep{iaao2013ratio}, we drop intra-family transfers, foreclosure and REO sales, and transactions below \$5{,}000, which are unlikely to reflect market value. The dependent variable throughout is the \emph{assessment ratio}, the recorded assessed value divided by the sale price; following \citet{berry2021reassessing} we trim ratios outside $[0.01, 5.0]$ to remove data errors. Because the University of Cincinnati assessment snapshot is predominantly of 2008--2009 vintage, we restrict to sales transacted in 2007--2010, the window in which the recorded assessment is approximately contemporaneous with the sale; outside this window the ratio would conflate genuine assessment regressivity with appreciation drift between the assessment date and the sale. The resulting estimation sample contains 11.9~million arms-length sales across 1{,}773 county jurisdictions.
+
+\paragraph{Geography.} For the spatial decomposition we map each parcel to its census tract using CoreLogic's \texttt{census\_id} field, which is populated for 92\% of the estimation sample and yields 53{,}903 distinct tracts across 45 states. County and tract identifiers nest, so census-tract fixed effects subsume county fixed effects.
+
+\paragraph{Caveats.} Two features of the data bound the analysis and are addressed directly below. The 2007--2010 window lies inside the housing downturn, during which assessed values---updated infrequently by statute---lagged falling market prices; this may amplify measured regressivity, a possibility we probe in Section~\ref{sec:discussion}. And the assessment-vintage restriction means our estimates speak to the late 2000s; extending the panel into the 2010s would require a more current or historical-panel extract.
 
 \section{Empirical Strategy}\label{sec:strategy}
+
+\paragraph{The regressivity elasticity.} Our point of departure is the canonical within-jurisdiction specification \citep{berry2021reassessing}:
+\begin{equation}
+\log(\text{ratio}_{ij}) = \alpha_j + \beta \, \log(\text{price}_{ij}) + \varepsilon_{ij},
+\label{eq:main}
+\end{equation}
+where $i$ indexes a parcel-transaction, $j$ a jurisdiction, $\text{ratio}_{ij}$ is the assessment ratio, $\text{price}_{ij}$ the sale price, and $\alpha_j$ a jurisdiction fixed effect. The coefficient $\beta$ is the within-jurisdiction elasticity of the assessment ratio with respect to value, and $\beta < 0$ is regressivity. Because the statutory tax rate is constant within a jurisdiction, it is absorbed by $\alpha_j$, so~\eqref{eq:main} delivers the same within-jurisdiction elasticity whether the outcome is the assessment ratio or the effective tax rate. We cluster standard errors by county throughout.
+
+\paragraph{Spatial decomposition.} To localize the regressivity we re-estimate~\eqref{eq:main} varying only the level at which $\alpha_j$ is defined: no fixed effect (pooled), the county, and the census tract. Comparing the county and tract estimates on a common sample isolates the spatial scale at which regressivity operates. Let $\beta_{\text{county}}$ and $\beta_{\text{tract}}$ denote the two slopes. If regressivity arose because assessors misprice whole neighborhoods, conditioning on the tract would absorb it and $\beta_{\text{tract}}$ would shrink toward zero; if instead it operates within neighborhoods, $\beta_{\text{tract}}$ would be no smaller---and, as we show, is in fact larger---than $\beta_{\text{county}}$. We summarize the result with the across-tract share, $(\beta_{\text{county}} - \beta_{\text{tract}})/\beta_{\text{county}}$.
+
+\paragraph{Mechanism test: transaction frequency.} To ask whether regressivity reflects temporal staleness, we add a candidate mediator $m_{ij}$ to~\eqref{eq:main}---either the years since the parcel's prior recorded sale or its lifetime transaction count---and measure how much the price slope changes. In the spirit of a Gelbach covariate decomposition, the mediated share $(\beta - \beta')/\beta$, where $\beta'$ is the slope with $m_{ij}$ included, is the fraction of the price--ratio relationship that operates through transaction frequency. This is a descriptive decomposition; we do not interpret $m_{ij}$ as causally manipulable.
+
+\paragraph{Measurement robustness.} \citet{mcmillen2023measures} show that regression-based regressivity measures can be mechanically biased. We therefore corroborate the spatial pattern with a distribution-based statistic---the gap in the mean assessment ratio between the bottom and top price deciles, computed within county versus within tract---which does not rely on the slope in~\eqref{eq:main}.
 
 \section{Results}\label{sec:results}
 
