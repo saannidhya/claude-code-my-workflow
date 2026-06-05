@@ -43,8 +43,6 @@ corelogic_research/
 ├── templates/                               # Project + spec + session templates
 ├── quality_reports/                         # Plans, specs, session logs (root-level)
 ├── Preambles/header.tex                     # SHARED LaTeX header
-├── Quarto/theme-template.scss               # SHARED Quarto theme
-├── Figures/                                 # Cross-project figures
 ├── shared_utils/{R,python,julia}/           # Cross-project libraries
 ├── data/                                    # GITIGNORED — see data/README.md
 │   ├── corelogic_extracts/by_state/         # Parquet store
@@ -76,9 +74,6 @@ cd projects/01_<slug>/manuscript && TEXINPUTS=../../../Preambles:$TEXINPUTS xela
 BIBINPUTS=../../..:$BIBINPUTS bibtex paper
 TEXINPUTS=../../../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode paper.tex
 TEXINPUTS=../../../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode paper.tex
-
-# Deploy project slides to GitHub Pages
-./scripts/sync_to_docs.sh projects/01_<slug>/slides/seminar
 
 # Quality score
 python scripts/quality_score.py projects/01_<slug>/manuscript/paper.tex
@@ -128,22 +123,12 @@ Enforced by `/commit` (halts + asks for override); not enforced by a git pre-com
 | `/seven-pass-review [file]` | Seven parallel adversarial reviews |
 | `/verify-claims [file]` | CoVe fact-check of citations + numerical claims |
 | `/review-r [file]` | R code quality review |
-| `/compile-latex [file]` | 3-pass XeLaTeX + bibtex |
-| `/deploy [path]` | Render Quarto + sync to docs/ |
-| `/qa-quarto [path]` | Quarto vs Beamer parity QA |
-| `/translate-to-quarto [file]` | Beamer → Quarto translation |
-| `/extract-tikz [path]` | TikZ → PDF → SVG |
-| `/new-diagram [snippet] [out.tex]` | Scaffold TikZ from gallery |
+| `/compile-latex [file]` | 3-pass XeLaTeX + bibtex (Beamer seminar slides / manuscripts) |
 | `/visual-audit [file]` | Slide layout audit |
-| `/pedagogy-review [file]` | Narrative, notation, pacing review (talks) |
 | `/proofread [file]` | Grammar/typo/overflow review |
-| `/slide-excellence [file]` | Combined multi-agent review |
-| `/devils-advocate` | Challenge a slide deck's design |
 | `/validate-bib` | Cross-reference citations |
 | `/commit [msg]` | Stage, commit, PR, merge |
 | `/learn [skill-name]` | Extract discovery into persistent skill |
 | `/context-status` | Show session health + context usage |
 | `/checkpoint [topic]` | Save state snapshot |
-| `/deep-audit` | Repository-wide consistency audit |
 | `/permission-check` | Diagnose permission layers |
-| `/create-lecture` | (legacy) Full lecture creation — kept for compatibility |

@@ -26,7 +26,7 @@ Each lens runs as a **forked subagent** (context: fork) so the main conversation
 |---|---|---|---|
 | 1 | Abstract audit | Does the abstract state the question, method, result, and contribution? Does it match the paper? | general-purpose |
 | 2 | Intro structure | Does the intro follow Cochrane / Varian framework? Literature placement? Contribution clarity? | general-purpose |
-| 3 | Methods / identification | Are assumptions stated? Is identification credible? Are alternatives addressed? | domain-reviewer |
+| 3 | Methods / identification | Are assumptions stated? Is identification credible? Are alternatives addressed? | methods-referee |
 | 4 | Results + tables | Do tables read standalone? Is magnitude + significance discussed? Units consistent? | general-purpose |
 | 5 | Robustness | Are obvious threats pre-empted? Is the robustness section convincing or theatrical? | general-purpose |
 | 6 | Prose quality | Sentence-level clarity, hedging, passive voice, paragraph cohesion | proofreader |

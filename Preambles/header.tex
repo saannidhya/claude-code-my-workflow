@@ -6,12 +6,8 @@
 % and compiling with TEXINPUTS=../Preambles:$TEXINPUTS (the /compile-latex
 % skill does this automatically).
 %
-% PALETTE CONTRACT. Color names defined here MUST match the names in
-% Quarto/theme-template.scss so Beamer and Quarto renderings use the same
-% palette. The scripts/check-palette-sync.sh script enforces this.
-%
-% To customize: edit the HEX values below AND the matching $variable in
-% Quarto/theme-template.scss, then run scripts/check-palette-sync.sh.
+% PALETTE. Named colors for the Beamer theme are defined below.
+% To customize, edit the HEX values in the PALETTE block.
 % =============================================================================
 
 % -----------------------------------------------------------------------------
@@ -30,7 +26,7 @@
 \usepackage{graphicx}
 
 % -----------------------------------------------------------------------------
-% PALETTE — mirrors Quarto/theme-template.scss variable names.
+% PALETTE — named colors for the Beamer theme.
 % Load xcolor and define colors BEFORE anything that references them
 % (notably hyperref, hypersetup, and the Beamer color assignments).
 % -----------------------------------------------------------------------------

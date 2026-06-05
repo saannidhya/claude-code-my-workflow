@@ -43,9 +43,8 @@ Thumbs.db
 CLAUDE.local.md
 
 # IDE
-# .vscode/settings.json ships in the template (carries shipped Claude Code permission-mode
-# recommendations — see TROUBLESHOOTING.md "Permissions / bypass / statusline" for the typo
-# fix forkers need). Other .vscode/ content is developer-machine-specific.
+# .vscode/settings.json is tracked (carries Claude Code permission-mode recommendations).
+# Other .vscode/ content is developer-machine-specific.
 .vscode/*
 !.vscode/settings.json
 .idea/

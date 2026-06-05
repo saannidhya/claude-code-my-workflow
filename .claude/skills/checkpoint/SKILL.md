@@ -73,7 +73,6 @@ status: in_progress | paused | ready-to-merge
 [Concrete `path:line` references to where the next session should resume. Aim for 3–8.]
 - `.claude/skills/checkpoint/SKILL.md:42` — body draft, needs trigger-phrase tightening
 - `quality_reports/plans/[slug].md:135` — verification section to refresh after impl
-- `CHANGELOG.md` — Unreleased section, v1.8.0 entry not yet drafted
 
 ## Recent decisions
 [2–5 bullet points of *why* we did what we did this session. Things that wouldn't be obvious from the diff. Skip if none — do not pad.]
@@ -105,7 +104,7 @@ Why: <one sentence on what makes this non-obvious>
 Apply where: <which future situations would benefit>
 ```
 
-If the user says "yes" / "all" / "1 and 3" — append to MEMORY.md (root, the committed one) using the `[LEARN]` format. If the candidate is machine-specific (paths, tool versions, personal preference), recommend the user route it to `.claude/state/personal-memory.md` instead per `.claude/rules/meta-governance.md`.
+If the user says "yes" / "all" / "1 and 3" — append to MEMORY.md (root, the committed one) using the `[LEARN]` format. If the candidate is machine-specific (paths, tool versions, personal preference), recommend the user route it to `.claude/state/personal-memory.md` instead.
 
 Stay below 3 candidates. If you have more, the session was probably under-narrated — flag it and recommend a session-log update instead.
 

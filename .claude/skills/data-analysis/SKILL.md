@@ -43,7 +43,6 @@ Output block (in your response to the user, before Phase 1):
 
 **Project conventions read:**
 - `.claude/rules/r-code-conventions.md` — [one-line summary of most relevant rule]
-- `.claude/rules/content-invariants.md` — [INV-9, INV-10, INV-11, INV-12 applicable]
 
 **Task interpretation:** [one sentence restating what the user asked for]
 

@@ -110,5 +110,5 @@ Then:
 ## Where this file lives
 
 - **File:** `.claude/references/discipline-cards.md`
-- **Schema parallel:** `.claude/references/journal-profiles.md` (per-journal) and `.claude/references/audit-pet-peeves.md` (living-catalogue format).
+- **Schema parallel:** `.claude/references/journal-profiles.md` (per-journal, living-catalogue format).
 - **Consumed by:** `/research-ideation`, `/interview-me`, `/preregister`, `editor` agent.

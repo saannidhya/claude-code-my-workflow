@@ -1,53 +1,39 @@
 ---
 paths:
+  - "projects/**/*.tex"
+  - "projects/**/scripts/**/*.R"
   - "Slides/**/*.tex"
-  - "Quarto/**/*.qmd"
-  - "docs/**"
 ---
 
 # Task Completion Verification Protocol
 
-**At the end of EVERY task, Claude MUST verify the output works correctly.** This is non-negotiable.
+**At the end of EVERY task, Claude MUST verify the output works correctly.** This is non-negotiable. Evidence before assertions — never claim "compiles" or "runs" without having run the command and read its output.
 
-## For Quarto/HTML Slides:
-1. Run `./scripts/sync_to_docs.sh` (or `./scripts/sync_to_docs.sh LectureN`) to render and deploy
-2. Open the HTML in browser: `open docs/slides/LectureX.html` (macOS) or `xdg-open` (Linux)
-3. Verify images display by reading 2-3 image files to confirm valid content
-4. Check HTML source for correct image paths
-5. Check for overflow by scanning dense slides
-6. Verify environment parity: every Beamer box environment has a CSS equivalent in the QMD
-7. Report verification results
+## For LaTeX / Beamer (manuscripts + seminar slides)
+1. Compile with XeLaTeX (manuscripts: 3-pass + bibtex; slides: single pass) and check the exit code.
+2. Grep the log for undefined citations (errors) and count `Overfull \hbox` warnings.
+3. Confirm the PDF was generated and is non-empty.
+4. For figures pulled from R, confirm the referenced figure files exist.
 
-## For LaTeX/Beamer Slides:
-1. Compile with xelatex and check for errors
-2. Open the PDF to verify figures render (`open` on macOS, `xdg-open` on Linux)
-3. Check for overfull hbox warnings
+## For R Scripts
+1. Run `Rscript projects/NN_<slug>/scripts/R/filename.R`.
+2. Verify output files (`.rds`, `.parquet`, tables, figures) were created with non-zero size.
+3. Spot-check estimates for finiteness and reasonable magnitude.
+4. **Guard against silent degeneracy:** an empty/near-empty estimation sample, an all-NA column, or a zero-row join can let a script "succeed" while producing a meaningless result. A clean exit is necessary but not sufficient — confirm `nobs`/row counts are in the expected range.
 
-## For TikZ Diagrams in HTML/Quarto:
-1. Browsers **cannot** display PDF images inline — ALWAYS convert to SVG
-2. Use SVG (vector format) for crisp rendering: `pdf2svg input.pdf output.svg`
-3. **NEVER use PNG for diagrams** — PNG is raster and looks blurry
-4. Verify SVG files contain valid XML/SVG markup
-5. Copy SVGs to `docs/Figures/LectureX/` via `sync_to_docs.sh`
-6. **Freshness check:** Before using any TikZ SVG, verify extract_tikz.tex matches current Beamer source
+## For Bibliography
+- Every `\cite` / `\citet` / `\citep` key in a modified `.tex` file must have an entry in `Bibliography_base.bib`.
 
-## For R Scripts:
-1. Run `Rscript scripts/R/filename.R`
-2. Verify output files (PDF, RDS) were created with non-zero size
-3. Spot-check estimates for reasonable magnitude
+## Common Pitfalls
+- **Assuming success**: always verify output files exist AND contain sensible content.
+- **Degenerate samples**: confirm row counts / `nobs` are in the expected range before trusting an estimate.
+- **Stale derived data**: if a script reads a cached `.parquet`, confirm the cache reflects the current upstream script.
 
-## Common Pitfalls:
-- **PDF images in HTML**: Browsers don't render PDFs inline → convert to SVG
-- **Relative paths**: `../Figures/` works from `Quarto/` but not from `docs/slides/` → use `sync_to_docs.sh`
-- **Assuming success**: Always verify output files exist AND contain correct content
-- **Stale TikZ SVGs**: extract_tikz.tex diverges from Beamer source → always diff-check
-
-## Verification Checklist:
+## Verification Checklist
 ```
-[ ] Output file created successfully
-[ ] No compilation/render errors
-[ ] Images/figures display correctly
-[ ] Paths resolve in deployment location (docs/)
-[ ] Opened in browser/viewer to confirm visual appearance
-[ ] Reported results to user
+[ ] Command actually run; exit code checked
+[ ] Output file created, non-zero size
+[ ] No compilation / run errors; citations resolve
+[ ] Estimates finite, sample non-degenerate
+[ ] Results reported to user with evidence
 ```

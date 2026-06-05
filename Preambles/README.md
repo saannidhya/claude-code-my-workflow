@@ -21,34 +21,20 @@ Shared LaTeX/Beamer preamble for lectures in this project.
 Compile with `/compile-latex <file>` — the skill sets `TEXINPUTS` for you. For manual compilation:
 
 ```bash
-cd Slides
-TEXINPUTS=../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode YourLecture.tex
+cd projects/01_<slug>/slides
+TEXINPUTS=../../../Preambles:$TEXINPUTS xelatex -interaction=nonstopmode seminar.tex
 ```
 
-## The palette contract
+## The palette
 
-Color names in `header.tex` **must** match the SCSS variable names in [`../Quarto/theme-template.scss`](../Quarto/theme-template.scss) so Beamer and Quarto renderings use the same palette.
-
-The `scripts/check-palette-sync.sh` script greps both files and reports any divergence:
-
-```bash
-./scripts/check-palette-sync.sh
-```
-
-It's also invoked (non-blocking) from `./scripts/validate-setup.sh`.
-
-When you customize the palette for your project:
-
-1. Edit HEX values in both `Preambles/header.tex` (LaTeX) **and** `Quarto/theme-template.scss` (SCSS).
-2. Keep the names aligned: `primary-blue`, `primary-gold`, `highlight-yellow`, `light-bg`, `jet`, `positive`, `negative`, `neutral`, `hi-slate`, `hi-green`, `hi-red`.
-3. Run `./scripts/check-palette-sync.sh` — it should report "in sync".
+The palette block in `header.tex` defines 11 named colors (`primary-blue`, `primary-gold`, `highlight-yellow`, `light-bg`, `jet`, `positive`, `negative`, `neutral`, `hi-slate`, `hi-green`, `hi-red`) for the Beamer theme. To customize, edit the HEX values in that block.
 
 ## What's inside
 
 - **Palette** — 11 named colors matching the SCSS.
 - **Beamer theme assignments** — structure, titles, itemize, alert, blocks, minimal footer. Applied only under Beamer (`\@ifundefined{beamertemplate}`).
 - **TikZ libraries** — `arrows.meta, positioning, calc, decorations.pathreplacing, fit, shapes.geometric, backgrounds`.
-- **Shared TikZ styles** — `dag-node`, `decision-node`, `observed-edge`, `counterfactual-edge`, `confound-edge`, `observed-dot`, `counterfactual-dot`. Used by `templates/tikz-snippets/` and reusable in hand-written diagrams.
+- **Shared TikZ styles** — `dag-node`, `decision-node`, `observed-edge`, `counterfactual-edge`, `confound-edge`, `observed-dot`, `counterfactual-dot`. Reusable in hand-written diagrams.
 - **Convenience macros** — `\muted{...}`, `\key{...}`, `\good{...}`, `\bad{...}`, `\transitionslide{...}`.
 
 ## Extending

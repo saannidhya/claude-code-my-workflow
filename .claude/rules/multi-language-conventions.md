@@ -47,7 +47,7 @@ Number scripts in run order. If R produces an input Julia consumes, name it expl
 | R | Tidyverse style guide; lintr; `here::here()` for paths; no `setwd()`. See `r-code-conventions.md`. |
 | Python | PEP 8; ruff for linting; type hints encouraged; `pathlib.Path` not strings |
 | Julia | JuliaFormatter defaults; type-stable code; `joinpath()` for paths |
-| LaTeX | Per `.claude/rules/single-source-of-truth.md` (Beamer first), `Preambles/header.tex` for shared macros |
+| LaTeX | `Preambles/header.tex` for shared macros; Beamer is the source of truth for slides |
 | Markdown | CommonMark; no HTML where Markdown will do; line wrap at ~100 cols for readability |
 
 ## Environment reproducibility

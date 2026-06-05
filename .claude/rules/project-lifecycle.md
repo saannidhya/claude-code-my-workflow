@@ -69,7 +69,7 @@ These skills accept a `--project NN` flag (or auto-detect from cwd):
 - `/lit-review`, `/interview-me`, `/research-ideation`, `/preregister`
 - `/review-paper`, `/review-r`, `/verify-claims`, `/seven-pass-review`, `/respond-to-referees`
 - `/audit-reproducibility` — walks `projects/NN/scripts/R/_outputs/`
-- `/compile-latex`, `/qa-quarto`, `/deploy`
+- `/compile-latex`
 - `/commit` — detects which project a commit touches; includes name in PR title
 
 ## Per-project quality reports
