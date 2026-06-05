@@ -16,14 +16,26 @@
 \maketitle
 
 \begin{abstract}
-\noindent {{ABSTRACT_PLACEHOLDER}} \\
-\textbf{JEL classification:} \\
-\textbf{Keywords:} CoreLogic, real estate, \dots
+\noindent Property-tax assessments are systematically regressive: within a taxing jurisdiction, lower-value homes are assessed at a higher fraction of market value than higher-value homes. Using 11.9 million arms-length residential sales from national CoreLogic micro-data, we replicate this fact---a within-county elasticity of the assessment ratio with respect to sale price of $-0.42$---and ask where in the assessment process it originates. Decomposing the regressivity spatially, we find it is a \emph{within-neighborhood} phenomenon: adding census-tract fixed effects \emph{steepens} the slope to $-0.52$, so the standard jurisdiction-level estimate understates the within-neighborhood inequity by roughly twenty percent. We rule out the most intuitive alternative---that low-value homes carry staler assessments because they trade less often---which a covariate decomposition shows accounts for under one percent of the regressivity. The pattern points to cross-sectional mass-appraisal error that anchors each parcel toward its neighborhood mean, rather than to temporal staleness or neighborhood-level mispricing. \\[4pt]
+\textbf{JEL classification:} H71, H22, R51 \\
+\textbf{Keywords:} property tax, assessment regressivity, vertical equity, mass appraisal, CoreLogic
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
 
-{{INTRO_PLACEHOLDER}}
+The property tax is the single largest source of own-source revenue for U.S.\ local governments and the fiscal backbone of public education. Its legitimacy rests on a simple premise: that a property's assessed value tracks its market value, so that owners of equally valuable homes pay equal tax and the burden rises in proportion to value. A growing body of evidence shows this premise fails systematically. Within a single taxing jurisdiction, lower-value homes are assessed at a higher fraction of their market value than higher-value homes, so the effective tax rate \emph{falls} with price \citep{berry2021reassessing, mcmillen2020assessment}. This assessment regressivity is a regressive transfer among owners of the same jurisdiction; it is correlated with race \citep{avenancioleon2022assessment} and with the tax-foreclosure crises that have hollowed out cities such as Detroit \citep{atuahene2019taxed, hodge2017assessment}.
+
+The magnitude of the regressivity is now well documented. \citet{berry2021reassessing} estimates a within-jurisdiction elasticity of the assessment ratio with respect to sale price of about $-0.37$ on a national sample; we replicate it at $-0.42$ on 11.9 million arms-length CoreLogic sales (Section~\ref{sec:results}). Yet the appropriate policy response depends on a question the literature has only begun to answer: \emph{where in the assessment process does the regressivity originate?} If assessed values are simply stale, the remedy is more frequent reassessment \citep{mikesell1980property, hou2023assessment}; if the valuation model is miscalibrated, the remedy is better mass appraisal; if the appeals process favors wealthier owners, the remedy is procedural \citep{mcmillen2013effect, doerner2014empirical}. Each diagnosis implies a different reform.
+
+This paper uses national, parcel-level CoreLogic micro-data to localize the regressivity and adjudicate among mechanisms. Rather than asking only how large the regressivity is, we ask at what \emph{spatial scale} and through what \emph{channel} it operates. The closest prior decomposition, \citet{amornsiripanitch2022why}, partitions national regressivity into a valuation-methods component and a reappraisal-frequency component. We instead decompose it \emph{spatially}---within versus across neighborhoods---and directly test the most intuitive temporal channel.
+
+Our central result is that assessment regressivity is a \emph{within-neighborhood} phenomenon, and that the standard jurisdiction-level estimate understates it. Adding census-tract fixed effects to the canonical within-county specification does not attenuate the price slope; it \emph{steepens} it, from $-0.41$ to $-0.52$ (Figure~\ref{fig:ladder}, Table~\ref{tab:decomp}). Comparing two homes on the same block, the cheaper home is over-assessed by even more than the county-wide figure implies. The intuition is that across neighborhoods, price differences partly reflect amenities that assessors do capitalize into value, which flattens the slope; within a neighborhood, the mass-appraisal model anchors every parcel toward a common neighborhood prediction, mechanically over-assessing the below-median home. The regressivity is thus a property of \emph{cross-sectional} valuation within neighborhoods, and conditioning on the neighborhood reveals roughly twenty percent more of it than the jurisdiction-level estimate.
+
+We then rule out the most natural alternative: that low-value homes are over-assessed because they trade less often and therefore carry staler assessed values. Using the complete transaction history of each parcel, a covariate (mediation) decomposition shows that transaction frequency and recency together account for under one percent of the regressivity (Table~\ref{tab:h6}). The operative channel is not temporal staleness from infrequent trading; it is the valuation model's treatment of the price cross-section. This null sharpens the target for the mechanism analysis that follows.
+
+These findings make three contributions. First, relative to \citet{berry2021reassessing} and the measurement literature \citep{mcmillen2023measures}, we localize the regressivity to the neighborhood and show that the jurisdiction-level estimate is a \emph{lower bound} on the within-neighborhood inequity. Second, relative to \citet{amornsiripanitch2022why}, we provide a spatial decomposition orthogonal to the valuation-versus-reappraisal split, and we directly reject the transaction-frequency channel. Third, our spatial result speaks to \citet{avenancioleon2022assessment}: they show the \emph{racial} assessment gap is roughly half a between-neighborhood phenomenon, whereas we find the \emph{price} regressivity is overwhelmingly within-neighborhood. Race operates between neighborhoods; price regressivity operates within them.
+
+Two caveats bound the analysis. First, our assessment snapshot is of 2008--2009 vintage, so we restrict attention to sales in 2007--2010, where the recorded assessment is approximately contemporaneous with the sale; this window lies inside the housing bust, which may amplify measured regressivity and which we probe directly. Second, \citet{mcmillen2023measures} show that the standard regression-based regressivity measure carries a mechanical bias; we therefore confirm the within-neighborhood pattern with a distribution-based statistic. The remainder of the paper proceeds as follows. Section~\ref{sec:data} describes the data; Section~\ref{sec:strategy} the empirical strategy; Section~\ref{sec:results} presents the decomposition and the mechanism tests; Section~\ref{sec:discussion} discusses implications for assessment policy; and Section~\ref{sec:conclusion} concludes.
 
 \section{Data}\label{sec:data}
 
@@ -33,14 +45,24 @@ Property records and transaction histories come from CoreLogic's bulk academic e
 
 \section{Results}\label{sec:results}
 
-\input{tables/T2_main_results.tex}
+\subsection{Replication and the spatial decomposition}
+
+Figure~\ref{fig:ladder} presents the central result. The elasticity of the assessment ratio with respect to sale price is small when estimated by pooled OLS ($-0.18$), rises to $-0.42$ once we absorb county fixed effects---replicating \citet{berry2021reassessing} to within $0.05$---and rises \emph{further}, to $-0.52$, once we absorb census-tract fixed effects. Because tract fixed effects strengthen rather than weaken the slope, the regressivity is not driven by assessors mispricing whole neighborhoods; it is sharpest \emph{within} neighborhoods. Table~\ref{tab:decomp} reports the estimates. Columns~(3) and~(4) are estimated on the identical tract-covered subsample, so the move from $-0.41$ to $-0.52$ is a clean within-neighborhood comparison: conditioning on the neighborhood uncovers roughly twenty percent more regressivity than the jurisdiction-level estimate.
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.8\linewidth]{figures/F1_median_price_trend.pdf}
-  \caption{Median sale price by year.}
-  \label{fig:median_price}
+  \includegraphics[width=0.85\linewidth]{figures/fig1_decomposition.pdf}
+  \caption{Within-jurisdiction price-regressivity by fixed-effects specification. Points are the estimated elasticity of the log assessment ratio with respect to log sale price; whiskers are 95\% confidence intervals (standard errors clustered by county). The slope steepens monotonically as the comparison set narrows from the full sample (pooled) to the county to the census tract.}
+  \label{fig:ladder}
 \end{figure}
+
+\input{tables/table1_main_decomposition.tex}
+
+\subsection{Ruling out transaction frequency}
+
+A natural explanation for within-neighborhood regressivity is temporal: cheaper homes may transact less often and so carry staler assessed values that lag a rising market. We test this directly. Table~\ref{tab:h6} reports a covariate (mediation) decomposition of the price slope, adding either the years since the parcel's prior sale (a backward-looking staleness measure) or the parcel's lifetime transaction count. Neither mediator moves the base coefficient: the share of regressivity operating through transaction frequency is $0.0$--$0.5\%$. Temporal staleness from infrequent trading is not the channel.
+
+\input{tables/table2_h6_mediation.tex}
 
 \section{Discussion}\label{sec:discussion}
 

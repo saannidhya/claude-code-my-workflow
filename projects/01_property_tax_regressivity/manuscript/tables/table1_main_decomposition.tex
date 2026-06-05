@@ -1,0 +1,19 @@
+\begin{table}
+\centering
+\caption{Within-jurisdiction regressivity and its spatial decomposition}\label{tab:decomp}
+\centering
+\begin{tabular}[t]{lcccc}
+\toprule
+  & (1) Pooled & (2) County FE (full) & (3) County FE (tract s.) & (4) Tract FE\\
+\midrule
+log(Sale price) & -0.175*** & -0.418*** & -0.410*** & -0.516***\\
+ & (0.000) & (0.009) & (0.009) & (0.009)\\
+\midrule
+Fixed effects & None & County & County & Tract\\
+Num.Obs. & 11934482 & 11934482 & 10976897 & 10976897\\
+R2 & 0.024 & 0.749 & 0.779 & 0.824\\
+\bottomrule
+\multicolumn{5}{l}{\rule{0pt}{1em}* p $<$ 0.05, ** p $<$ 0.01, *** p $<$ 0.001}\\
+\multicolumn{5}{l}{\rule{0pt}{1em}DV: log(assessment ratio). SE clustered by county in FE columns. Cols (3)-(4) use the identical tract-covered subsample: adding tract FE moves the slope from -0.41 to -0.52, so regressivity intensifies within neighborhoods.}\\
+\end{tabular}
+\end{table}
