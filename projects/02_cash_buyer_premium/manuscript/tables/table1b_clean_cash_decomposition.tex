@@ -1,0 +1,21 @@
+\begin{table}[!htbp]
+\centering
+\caption{Sequential cleaning of the property-adjusted cash-mortgage gap, 2024}
+\label{tab:clean-cash-decomposition}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrr}
+\toprule
+Sample definition & Cash transactions & Mortgage transactions & Cells & Weighted gap & Median-cell gap \\
+\midrule
+All cash & 624{,}312 & 1{,}394{,}882 & 15{,}659 & -26.7\% & -17.8\% \\
+Non-distress cash & 594{,}016 & 1{,}345{,}258 & 15{,}054 & -25.9\% & -16.3\% \\
+Non-institutional, non-distress & 399{,}694 & 1{,}079{,}300 & 11{,}537 & -20.2\% & -10.1\% \\
+Clean ordinary & 384{,}758 & 923{,}671 & 11{,}460 & -21.6\% & -10.1\% \\
+\bottomrule
+\end{tabular}
+}
+\begin{minipage}{0.92\linewidth}
+\footnotesize\raggedright
+\emph{Notes:} Gaps are median natural-log price differences inside matched county-year-property cells from \texttt{clean\_cash\_gap\_by\_year.csv}. The strict clean-ordinary comparison excludes distress, investor, corporate, and new-construction transactions for both cash and mortgage observations, after dropping state-years with other-or-unknown finance shares above 5 percent.
+\end{minipage}
+\end{table}

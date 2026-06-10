@@ -54,3 +54,5 @@ When a mistake is corrected, append a `[LEARN:category]` entry below.
 ## Repository Scope (2026-06-05)
 
 [LEARN:meta] This is a working research repo, NOT a public template. The inherited lecture-slides pipeline (Beamer↔Quarto parity, TikZ gallery, pedagogy/course-lecture skills) and template-maintenance machinery (CHANGELOG, drift-check scripts, meta-governance, forker docs) were pruned 2026-06-05 (66 files; see `quality_reports/plans/2026-06-05_repo-prune.md`). KEPT: research/review skills, `compile-latex` + `visual-audit` + `proofread` for Beamer seminar slides, the `_template/` project scaffold, and operational templates.
+
+[LEARN:data] duckdb `GROUP BY ALL` groups by every non-aggregate column in the SELECT list — if the entity key (e.g., `clip`) is not SELECTed, rows silently collapse across entities and aggregates become garbage (project 03, 2026-06-09: spell table collapsed 3M cohort events into 86k state-date rows; sold-within-24m jumped 0.10 → 0.65). Fix: always SELECT the entity key alongside GROUP BY ALL, and assert aggregate magnitudes against known totals (sum(n) vs known annual volumes), not just row counts.

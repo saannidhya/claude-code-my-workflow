@@ -63,6 +63,7 @@ corelogic_research/
 | # | Slug | Status | Topic | Manuscript | Slides |
 |---|------|--------|-------|------------|--------|
 | 01 | `property_tax_regressivity` | EXPLORATION | How much tax revenue is misallocated by assessor information asymmetry, and which mechanism (info decay / acquisition cost / institutions / appeals / transaction freq) drives it? Berry (2021 SSRN) replication + structural extension | [projects/01_property_tax_regressivity/manuscript/paper.tex](projects/01_property_tax_regressivity/manuscript/paper.tex) | [projects/01_property_tax_regressivity/slides/seminar.tex](projects/01_property_tax_regressivity/slides/seminar.tex) |
+| 03 | `family_homes` | EXPLORATION | How large is the non-market intra-family channel of housing turnover, what happens to homes after family transfers, and does the tax price of dynastic holding (CA Prop 19) causally affect whether inherited homes reach the market? | [projects/03_family_homes/manuscript/paper.tex](projects/03_family_homes/manuscript/paper.tex) | [projects/03_family_homes/slides/seminar.tex](projects/03_family_homes/slides/seminar.tex) |
 
 ---
 

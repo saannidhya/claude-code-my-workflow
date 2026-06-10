@@ -1,0 +1,104 @@
+\documentclass[12pt, letterpaper]{article}
+
+\input{../../../Preambles/header.tex}
+
+\usepackage[round, sort&compress, authoryear]{natbib}
+\bibliographystyle{aer}
+\setlength{\emergencystretch}{2em}
+
+\title{The Many Meanings of Cash in Housing Markets\thanks{Saani Rawat, Marquette University. Email: saani.rawat@marquette.edu. Preliminary and incomplete. All errors are my own.}}
+\author{Saani Rawat\\Marquette University}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\noindent Housing-market transactions often distinguish between cash and mortgage-financed buyers, but a cash purchase is not a single economic object. Using national CoreLogic transaction records, I decompose the mortgage-cash price gap into ordinary cash purchases, corporate/entity cash purchases, investor cash purchases, and distress-related cash purchases. Preliminary evidence shows that the headline cash discount is much larger for investor, corporate, and distress cash transactions than for ordinary cash transactions. Repeat-sale evidence, adjusted for annual state-level FHFA house-price growth, further suggests that investor and corporate cash purchases are followed by unusually high resale returns. These facts reframe the mortgage-cash premium puzzle: the question is not whether sellers value cash, but which type of cash buyer is being priced. \\[4pt]
+\textbf{JEL classification:} G21, R21, R31 \\
+\textbf{Keywords:} cash buyers, mortgage finance, housing markets, investors, CoreLogic
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+
+A cash transaction can mean an ordinary household avoiding mortgage frictions, an LLC acquiring rental inventory, an investor buying a distressed property, or a corporate buyer intermediating low-quality housing. These are different economic objects, but housing-market data often record them through the same financing indicator. A growing literature shows that this financing distinction is priced: mortgaged buyers pay more than cash buyers in average transaction comparisons \citep{reher2024mortgagecash}, and cash offers can close faster and at a discount when financing risk is salient \citep{han2024cashking}. Yet the cash indicator in deed data bundles several economically distinct roles.
+
+This paper asks what the mortgage-cash premium means once cash buyers are separated by economic role. The distinction matters for interpretation. If ordinary households receive a modest cash discount because they remove financing risk, then the cash premium is mainly a contract-certainty object. If investor and corporate cash buyers receive much larger discounts and then resell quickly at high returns, cash is also an intermediation technology. If distress-related cash purchases dominate the largest discounts, then part of the premium belongs to the forced-sale literature rather than to mortgage underwriting frictions \citep{campbell2011forcedsales}.
+
+I use national CoreLogic owner-transfer microdata from 2007--2024, linked to property-characteristic records for matched-cell comparisons. The first contribution is descriptive but fundamental: I show that cash is not one buyer type. In property-location-time cells, ordinary cash transactions are discounted relative to mortgage transactions, but corporate, investor, and distress cash transactions are discounted much more. The second contribution is a repeat-sale intermediation test. Following parcels from purchase to next resale, investor and corporate cash purchases have shorter holding periods and higher subsequent returns than mortgage purchases. These patterns suggest that the deepest cash discounts are not merely seller compensation for certainty; they are also acquisition margins for buyers who intermediate illiquid housing assets.
+
+The paper is currently preliminary. The repeat-sale returns reported below are adjusted for annual state-level FHFA house-price appreciation, but not for county or ZIP appreciation, renovation investment, or unobserved quality change. The analysis therefore does not claim causal abnormal returns. Instead, it establishes a set of facts that discipline the identification strategy for a publication-ready draft: decompose cash by buyer type first, then test whether excess resale returns survive finer local HPI adjustment, clean ordinary-household restrictions, and distress exclusions.
+
+\section{Related Literature and Mechanisms}\label{sec:literature}
+
+This paper builds on the mortgage-cash premium literature. \citet{reher2024mortgagecash} document a large premium paid by mortgaged buyers relative to all-cash buyers and interpret the gap through mortgage transaction frictions and seller beliefs. \citet{han2024cashking} use offer-relevant evidence from Los Angeles to show that cash offers can receive discounts because they reduce financing risk and close faster. These papers motivate the seller-certainty channel, but they also make clear why an average cash coefficient is difficult to interpret.
+
+The second mechanism is distress. \citet{campbell2011forcedsales} show that forced sales occur at large discounts, so any cash-mortgage comparison that mixes in foreclosure or REO transactions can confound financing status with forced liquidation. The third mechanism is investor and corporate acquisition. Recent single-family investor work, including \citet{leewylie2024investors}, studies institutional entry and neighborhood outcomes; this paper instead asks a narrower transaction-price question: how much of the cash discount reflects buyer identity and acquisition strategy before resale?
+
+The contribution is therefore measurement and decomposition rather than a new claim that cash buyers pay less. I keep the mortgage-cash premium as the motivating puzzle, then open the all-cash category using national deed-level buyer and distress information. The central empirical question is how much of the observed discount belongs to ordinary financing certainty and how much belongs to corporate, investor, and distress intermediation.
+
+\section{Data}\label{sec:data}
+
+The primary data are CoreLogic owner-transfer records and property-characteristic records from the University of Cincinnati academic extract. The owner-transfer data include sale price, sale date, parcel identifiers, cash and mortgage purchase indicators, investor purchase indicators, corporate-buyer indicators, foreclosure and REO indicators, and location fields. The property file provides structural characteristics used to form matched cells: property type, bedrooms, bathrooms, square-footage bins, age bins, owner-occupancy codes, and county/state geography.
+
+The initial national audit covers 87.9 million valid-price transactions from 2007--2024. Because the paper's contribution depends on classification credibility, I separately audit cash-mortgage flag conflicts, missing finance status, and overlap among investor, corporate, and distress indicators before treating the taxonomy as an empirical object. For the within-cell decomposition, I focus on 2018--2024 transactions that can be matched into county-year-property cells containing both cash and mortgage purchases, excluding state-years where the other-or-unknown finance share exceeds 5 percent in the clean decomposition. For the repeat-sale analysis, I form consecutive same-parcel purchase-resale pairs with purchase years 2018--2023, resale by 2024, sale prices between \$10,000 and \$10 million, and holding periods between 0.5 and 6 years.
+
+Table~\ref{tab:taxonomy-audit} reports the current 2024 taxonomy audit for the filtered analysis sample. The residual noncash/nonmortgage category is small nationally, but the appendix version will report state-year coverage because several states have incomplete finance-status coding. This audit is part of the identification strategy: buyer-type heterogeneity cannot be interpreted until finance flags and buyer-type overlaps are explicit.
+
+\input{tables/table0_taxonomy_audit.tex}
+
+\section{Empirical Strategy}\label{sec:strategy}
+
+The empirical strategy starts from a classification problem. Mortgage transactions are the omitted benchmark. Cash transactions are partitioned into mutually exclusive categories using the following priority: distress cash, investor cash, corporate cash, ordinary cash. Finance-flag conflicts and unknown finance status are audited separately rather than folded into the main coefficients. This priority prevents overlapping CoreLogic flags from creating double-counted buyer types.
+
+\subsection{Within-cell decomposition}
+
+The first design compares prices within narrow location-time-property cells:
+\begin{align}
+\log(P_{ict}) = \alpha_{ct}
+  &+ \beta_1 OrdinaryCash_i + \beta_2 CorporateCash_i \notag\\
+  &+ \beta_3 InvestorCash_i + \beta_4 DistressCash_i + \varepsilon_{ict}.
+\end{align}
+The current implementation uses median log-price gaps within county-year by property-type, bedroom, bathroom, square-footage, age, and owner-occupancy cells. This is a descriptive decomposition, not a causal estimate. Its purpose is to define which component of the average cash discount belongs to ordinary cash versus institutional or distressed cash.
+
+\subsection{Repeat-sale intermediation}
+
+The second design follows properties from purchase to next resale:
+\[
+\Delta \log(P_i) / h_i = \gamma_{BuyerType(i)} + X_i'\delta + \eta_i,
+\]
+where $h_i$ is the holding period in years. In the current draft, Table~\ref{tab:repeat-sales} reports raw annualized repeat-sale returns and returns net of annual state-level FHFA HPI growth by purchase-side buyer type. The next version will replace the state-HPI benchmark with county or ZIP HPI growth and add purchase county-year and holding-period controls.
+
+\section{Results}\label{sec:results}
+
+\subsection{Cash is not one buyer type}
+
+Table~\ref{tab:cash-type-gaps} reports the preliminary within-cell decomposition. Ordinary cash purchases are discounted relative to mortgage purchases, but the discount is much smaller than the discount for corporate, investor, and distress cash transactions. The average mortgage-cash premium is therefore partly a composition object.
+
+\input{tables/table1_cash_type_gaps.tex}
+
+Table~\ref{tab:clean-cash-decomposition} reports a sequential cleaning exercise. Removing distress, investor, corporate, and new-construction transactions reduces the matched-cell cash discount, but a clean ordinary-cash discount remains. This is not yet a seller-certainty estimate because unobserved quality and transaction terms remain uncontrolled.
+
+\input{tables/table1b_clean_cash_decomposition.tex}
+
+\subsection{Repeat-sale evidence for intermediation}
+
+Table~\ref{tab:repeat-sales} follows purchase-resale pairs. Investor cash purchases have the lowest median purchase prices, short holding periods, high resale-to-mortgage shares, and the highest annualized resale returns even after subtracting annual state HPI growth. Corporate cash purchases also have higher state-HPI-adjusted returns than ordinary cash and mortgage purchases. This pattern is consistent with an intermediation mechanism: some cash buyers acquire illiquid or underpriced assets and resell them into the broader mortgage-financed market. The table remains descriptive because annual state HPI does not control for neighborhood appreciation, renovations, or quality selection.
+
+\input{tables/table2_repeat_sale_returns.tex}
+
+\section{Threats and Next Tests}\label{sec:threats}
+
+The current evidence is not yet publication-ready. First, repeat-sale returns are adjusted only for annual state-level house-price appreciation, not county or ZIP appreciation. Second, investor and corporate buyers may renovate properties before resale, so high resale returns can reflect capital improvements rather than acquisition discounts. Third, CoreLogic's investor and corporate-buyer flags disagree in important ways and require validation. Fourth, distress flags may not capture all seller distress or non-arms-length transactions.
+
+The next empirical steps are therefore: replace the state-HPI benchmark with county or ZIP HPI adjustment, validate buyer classifications further, refine clean ordinary-cash benchmarks with related-party or non-arms-length exclusions if available, split resale outcomes by buyer type, and test whether local mortgage-friction shocks shift transaction composition toward cash-capable buyers.
+
+\section{Conclusion}\label{sec:conclusion}
+
+Cash purchases in housing markets have many meanings. The same indicator can describe household liquidity, seller certainty, investor acquisition, corporate intermediation, and distress absorption. Preliminary national CoreLogic evidence shows that these meanings have sharply different price and resale-return profiles. A publication-ready version of this paper will use these facts to reinterpret the mortgage-cash premium as a composite object and identify how much of it survives after separating ordinary cash from institutional and distress channels.
+
+\bibliography{../../../Bibliography_base}
+
+\input{appendix.tex}
+
+\end{document}

@@ -1,0 +1,22 @@
+\begin{table}[!htbp]
+\centering
+\caption{Repeat-sale returns net of state HPI growth}
+\label{tab:repeat-sales}
+\resizebox{\linewidth}{!}{%
+\begin{tabular}{lrrrrrrr}
+\toprule
+Purchase type & Pairs & Hold yrs. & Buy price & Resale price & Raw ann. return & State-HPI adj. return & Resale mortgage \\
+\midrule
+Mortgage & 3{,}174{,}322 & 2.28 & \$250{,}000 & \$330{,}000 & 17.7\% & 7.1\% & 79.0\% \\
+Ordinary cash & 959{,}665 & 1.92 & \$160{,}000 & \$250{,}000 & 35.7\% & 23.4\% & 57.9\% \\
+Corporate cash & 576{,}165 & 1.16 & \$170{,}000 & \$299{,}900 & 54.6\% & 41.0\% & 67.0\% \\
+Investor cash & 102{,}192 & 0.96 & \$104{,}300 & \$209{,}667 & 86.5\% & 73.2\% & 71.2\% \\
+Distress cash & 239{,}925 & 1.00 & \$105{,}000 & \$172{,}500 & 40.8\% & 31.4\% & 61.4\% \\
+\bottomrule
+\end{tabular}
+}
+\begin{minipage}{0.92\linewidth}
+\footnotesize\raggedright
+\emph{Notes:} Consecutive same-parcel purchase-resale pairs from \texttt{repeat\_sale\_hpi\_adjusted\_by\_purchase\_type.csv}. Purchases occur in 2018--2023 and resales by 2024. Holding periods are restricted to 0.5--6 years. Raw and adjusted returns are winsorized natural-log annual returns transformed to percent units. State-HPI adjustment subtracts annual FHFA state HPI growth over the holding period; it is not county, ZIP, renovation, or quality adjusted.
+\end{minipage}
+\end{table}
